@@ -98,8 +98,10 @@ app = Flask(__name__)
 # model_uri = f'models:/{model_name}/{model_version}'
 # model = mlflow.pyfunc.load_model(model_uri)
 
+# new code block
+model_path = os.path.join(os.path.dirname(__file__), "models", "model")
+model = mlflow.pyfunc.load_model(model_path)
 
-model = mlflow.pyfunc.load_model("models/model")     # new line
 vectorizer = pickle.load(open("models/vectorizer.pkl", "rb"))
 
 @app.route('/')
