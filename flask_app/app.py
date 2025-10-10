@@ -99,8 +99,15 @@ app = Flask(__name__)
 # model = mlflow.pyfunc.load_model(model_uri)
 
 # new code (export model from model registry to local dir & then load it. avoids dagshub token dependency)
-model_path = os.path.join("models", "model")
-model = mlflow.pyfunc.load_model(model_path)
+model_name = "my_model"
+model_uri = f'models:/{model_name}/Production'
+
+output_dir = "models_dir/model"
+os.makedirs(output_dir, exist_ok=True)
+
+print(f"Downloading model from {model_uri} ...")
+mlflow.pyfunc.load_model(model_uri).save(output_dir)
+print(f"Model saved to {output_dir}")
 
 vectorizer = pickle.load(open("models/vectorizer.pkl", "rb"))
 

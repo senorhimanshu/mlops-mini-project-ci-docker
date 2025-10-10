@@ -45,10 +45,10 @@ jobs:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: python scripts/promote_model.py
 
-      - name: Export model from MLflow      # new code block
-        if: success()
-        run: |
-          mlflow models export -m "models:/my_model/Production" -d models/model
+      # - name: Export model from MLflow      # new code block
+      #   if: success()
+      #   run: |
+      #     mlflow models export -m "models:/my_model/Production" -d models/model
 
       - name: Run Flask app tests
         if: success()
