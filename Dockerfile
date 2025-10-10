@@ -7,7 +7,7 @@ COPY flask_app/ /app/
 COPY models/vectorizer.pkl /app/models/vectorizer.pkl
 
 # new line
-# COPY models/model/ /app/models/model/
+COPY models/model/ /app/models/model/
 
 RUN pip install -r requirements.txt
 
