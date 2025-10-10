@@ -68,19 +68,19 @@ def normalize_text(text):
     return text
 
 # Set up DagsHub credentials for MLflow tracking
-dagshub_token = os.getenv("DAGSHUB_PAT")    # dagshub token is set
-if not dagshub_token:
-    raise EnvironmentError("DAGSHUB_PAT environment variable is not set") 
+# dagshub_token = os.getenv("DAGSHUB_PAT")    # dagshub token is set
+# if not dagshub_token:
+#     raise EnvironmentError("DAGSHUB_PAT environment variable is not set") 
 
-os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
-os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+# os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+# os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
-dagshub_url = "https://dagshub.com"
-repo_owner = "senorhimanshu"
-repo_name = "mlops-mini-project-ci-docker"
+# dagshub_url = "https://dagshub.com"
+# repo_owner = "senorhimanshu"
+# repo_name = "mlops-mini-project-ci-docker"
 
 # Set up MLflow tracking URI
-mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
+# mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
 
 app = Flask(__name__)
 
@@ -100,7 +100,13 @@ app = Flask(__name__)
 
 # new code block
 model_path = os.path.join(os.path.dirname(__file__), "models", "model")
+
+if not os.path.exists(model_path):
+    raise FileNotFoundError(f"Model path not found: {model_path}. "
+                            f"Ensure model was copied into the image.")
+
 model = mlflow.pyfunc.load_model(model_path)
+print("✅ Model loaded successfully from local directory")
 
 vectorizer = pickle.load(open("models/vectorizer.pkl", "rb"))
 
