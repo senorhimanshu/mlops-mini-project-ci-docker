@@ -84,7 +84,7 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/emotion3:latest
             docker stop my-app || true
-            docker rm my_app || true
+            docker rm my-app || true
             docker run -d -p 80:5000 --name my-app \
               ${{ secrets.DOCKER_HUB_USERNAME }}/emotion3:latest
             
